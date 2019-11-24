@@ -1,17 +1,23 @@
 <?php
 
 
-namespace app\mainController;
+namespace App\Controller;
+
 
 
 use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\Date;
 
 class mainController extends AbstractController
 {
+    /**
+     * @Route("/")
+     */
     public function home()
     {
-
+        return new Response('Hello :)');
     }
 
     public function inscription()
@@ -44,7 +50,7 @@ class mainController extends AbstractController
 
     }
 
-    public function assignerIntervenant(Boolean $matin, Intervenant $intervenant)
+    public function assignerIntervenant(Boolean $matin, int $idUtilisteur)
     {
 
     }
