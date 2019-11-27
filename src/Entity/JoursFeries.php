@@ -2,14 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * JoursFeries
  *
- * @ORM\Table(name="jours_feries")
+ * @ORM\Table(name="jours_feries", uniqueConstraints={@ORM\UniqueConstraint(name="jours_feries_jour_AK", columns={"id_Jour"})})
  * @ORM\Entity
  */
 class JoursFeries
@@ -17,77 +15,38 @@ class JoursFeries
     /**
      * @var int
      *
-     * @ORM\Column(name="idFerier", type="integer", nullable=false)
+     * @ORM\Column(name="idFerie", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idferier;
+    private $idferie;
 
     /**
-     * @var \DateTime
+     * @var \Jour
      *
-     * @ORM\Column(name="jour", type="date", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Jour")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_Jour", referencedColumnName="idJour")
+     * })
      */
-    private $jour;
+    private $idJour;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Planning", mappedBy="idJoursFeries")
-     */
-    private $idPlanning;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
+    public function getIdferie(): ?int
     {
-        $this->idPlanning = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->idferie;
     }
 
-    public function getIdferier(): ?int
+    public function getIdJour(): ?Jour
     {
-        return $this->idferier;
+        return $this->idJour;
     }
 
-    public function getJour(): ?\DateTimeInterface
+    public function setIdJour(?Jour $idJour): self
     {
-        return $this->jour;
-    }
-
-    public function setJour(\DateTimeInterface $jour): self
-    {
-        $this->jour = $jour;
+        $this->idJour = $idJour;
 
         return $this;
     }
 
-    /**
-     * @return Collection|Planning[]
-     */
-    public function getIdPlanning(): Collection
-    {
-        return $this->idPlanning;
-    }
-
-    public function addIdPlanning(Planning $idPlanning): self
-    {
-        if (!$this->idPlanning->contains($idPlanning)) {
-            $this->idPlanning[] = $idPlanning;
-            $idPlanning->addIdJoursFery($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIdPlanning(Planning $idPlanning): self
-    {
-        if ($this->idPlanning->contains($idPlanning)) {
-            $this->idPlanning->removeElement($idPlanning);
-            $idPlanning->removeIdJoursFery($this);
-        }
-
-        return $this;
-    }
 
 }

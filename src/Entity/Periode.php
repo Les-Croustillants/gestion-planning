@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,66 +15,117 @@ use Doctrine\ORM\Mapping as ORM;
 class Periode
 {
     /**
-     * @var \DateTime
+     * @var int
      *
-     * @ORM\Column(name="dt_debut", type="date", nullable=false)
-     */
-    private $dtDebut;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="dt_fin", type="date", nullable=false)
-     */
-    private $dtFin;
-
-    /**
-     * @var \Indisponible
-     *
+     * @ORM\Column(name="idPeriode", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Indisponible")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_indisponnible", referencedColumnName="idIndisponnible")
-     * })
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idIndisponnible;
+    private $idperiode;
 
-    public function getDtDebut(): ?\DateTimeInterface
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_debut", type="date", nullable=false)
+     */
+    private $dateDebut;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_fin", type="date", nullable=false)
+     */
+    private $dateFin;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="isFormation", type="boolean", nullable=false)
+     */
+    private $isformation;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Calendrier", mappedBy="idPeriode")
+     */
+    private $idCalendrier;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
     {
-        return $this->dtDebut;
+        $this->idCalendrier = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function setDtDebut(\DateTimeInterface $dtDebut): self
+    public function getIdperiode(): ?int
     {
-        $this->dtDebut = $dtDebut;
+        return $this->idperiode;
+    }
+
+    public function getDateDebut(): ?\DateTimeInterface
+    {
+        return $this->dateDebut;
+    }
+
+    public function setDateDebut(\DateTimeInterface $dateDebut): self
+    {
+        $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
-    public function getDtFin(): ?\DateTimeInterface
+    public function getDateFin(): ?\DateTimeInterface
     {
-        return $this->dtFin;
+        return $this->dateFin;
     }
 
-    public function setDtFin(\DateTimeInterface $dtFin): self
+    public function setDateFin(\DateTimeInterface $dateFin): self
     {
-        $this->dtFin = $dtFin;
+        $this->dateFin = $dateFin;
 
         return $this;
     }
 
-    public function getIdIndisponnible(): ?Indisponible
+    public function getIsformation(): ?bool
     {
-        return $this->idIndisponnible;
+        return $this->isformation;
     }
 
-    public function setIdIndisponnible(?Indisponible $idIndisponnible): self
+    public function setIsformation(bool $isformation): self
     {
-        $this->idIndisponnible = $idIndisponnible;
+        $this->isformation = $isformation;
 
         return $this;
     }
 
+    /**
+     * @return Collection|Calendrier[]
+     */
+    public function getIdCalendrier(): Collection
+    {
+        return $this->idCalendrier;
+    }
+
+    public function addIdCalendrier(Calendrier $idCalendrier): self
+    {
+        if (!$this->idCalendrier->contains($idCalendrier)) {
+            $this->idCalendrier[] = $idCalendrier;
+            $idCalendrier->addIdPeriode($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIdCalendrier(Calendrier $idCalendrier): self
+    {
+        if ($this->idCalendrier->contains($idCalendrier)) {
+            $this->idCalendrier->removeElement($idCalendrier);
+            $idCalendrier->removeIdPeriode($this);
+        }
+
+        return $this;
+    }
 
 }

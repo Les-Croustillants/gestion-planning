@@ -24,23 +24,23 @@ class Role
     /**
      * @var string
      *
-     * @ORM\Column(name="libelle", type="string", length=15, nullable=false)
+     * @ORM\Column(name="libelleRole", type="string", length=15, nullable=false)
      */
-    private $libelle;
+    private $libellerole;
 
     public function getIdrole(): ?int
     {
         return $this->idrole;
     }
 
-    public function getLibelle(): ?string
+    public function getLibellerole(): ?string
     {
-        return $this->libelle;
+        return $this->libellerole;
     }
 
-    public function setLibelle(string $libelle): self
+    public function setLibellerole(string $libellerole): self
     {
-        $this->libelle = $libelle;
+        $this->libellerole = $libellerole;
 
         return $this;
     }

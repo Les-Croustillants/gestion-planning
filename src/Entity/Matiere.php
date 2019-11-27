@@ -24,16 +24,16 @@ class Matiere
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=50, nullable=false)
+     * @ORM\Column(name="nomMatiere", type="string", length=50, nullable=false)
      */
-    private $nom;
+    private $nommatiere;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="nbHeuresTotal", type="integer", nullable=false)
+     * @ORM\Column(name="nbHeuresTotalMatiere", type="integer", nullable=false)
      */
-    private $nbheurestotal;
+    private $nbheurestotalmatiere;
 
     /**
      * @var \Utilisateur
@@ -50,26 +50,26 @@ class Matiere
         return $this->idmatiere;
     }
 
-    public function getNom(): ?string
+    public function getNommatiere(): ?string
     {
-        return $this->nom;
+        return $this->nommatiere;
     }
 
-    public function setNom(string $nom): self
+    public function setNommatiere(string $nommatiere): self
     {
-        $this->nom = $nom;
+        $this->nommatiere = $nommatiere;
 
         return $this;
     }
 
-    public function getNbheurestotal(): ?int
+    public function getNbheurestotalmatiere(): ?int
     {
-        return $this->nbheurestotal;
+        return $this->nbheurestotalmatiere;
     }
 
-    public function setNbheurestotal(int $nbheurestotal): self
+    public function setNbheurestotalmatiere(int $nbheurestotalmatiere): self
     {
-        $this->nbheurestotal = $nbheurestotal;
+        $this->nbheurestotalmatiere = $nbheurestotalmatiere;
 
         return $this;
     }

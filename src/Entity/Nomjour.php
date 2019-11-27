@@ -7,33 +7,33 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * DemiJournee
+ * Nomjour
  *
- * @ORM\Table(name="demi_journee")
+ * @ORM\Table(name="nomjour")
  * @ORM\Entity
  */
-class DemiJournee
+class Nomjour
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="idDemiJournee", type="integer", nullable=false)
+     * @ORM\Column(name="idNomJour", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $iddemijournee;
+    private $idnomjour;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="libelleDemiJournee", type="string", length=15, nullable=false)
+     * @ORM\Column(name="libelleNomJour", type="string", length=20, nullable=false)
      */
-    private $libelledemijournee;
+    private $libellenomjour;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Indisponible", mappedBy="idDemiJournee")
+     * @ORM\ManyToMany(targetEntity="Indisponible", mappedBy="idNomjour")
      */
     private $idIndisponible;
 
@@ -45,19 +45,19 @@ class DemiJournee
         $this->idIndisponible = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getIddemijournee(): ?int
+    public function getIdnomjour(): ?int
     {
-        return $this->iddemijournee;
+        return $this->idnomjour;
     }
 
-    public function getLibelledemijournee(): ?string
+    public function getLibellenomjour(): ?string
     {
-        return $this->libelledemijournee;
+        return $this->libellenomjour;
     }
 
-    public function setLibelledemijournee(string $libelledemijournee): self
+    public function setLibellenomjour(string $libellenomjour): self
     {
-        $this->libelledemijournee = $libelledemijournee;
+        $this->libellenomjour = $libellenomjour;
 
         return $this;
     }
@@ -74,7 +74,7 @@ class DemiJournee
     {
         if (!$this->idIndisponible->contains($idIndisponible)) {
             $this->idIndisponible[] = $idIndisponible;
-            $idIndisponible->addIdDemiJournee($this);
+            $idIndisponible->addIdNomjour($this);
         }
 
         return $this;
@@ -84,7 +84,7 @@ class DemiJournee
     {
         if ($this->idIndisponible->contains($idIndisponible)) {
             $this->idIndisponible->removeElement($idIndisponible);
-            $idIndisponible->removeIdDemiJournee($this);
+            $idIndisponible->removeIdNomjour($this);
         }
 
         return $this;

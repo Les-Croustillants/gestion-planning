@@ -7,33 +7,40 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * DemiJournee
+ * LongueDuree
  *
- * @ORM\Table(name="demi_journee")
+ * @ORM\Table(name="longue_duree")
  * @ORM\Entity
  */
-class DemiJournee
+class LongueDuree
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="idDemiJournee", type="integer", nullable=false)
+     * @ORM\Column(name="idLongueDuree", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $iddemijournee;
+    private $idlongueduree;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="libelleDemiJournee", type="string", length=15, nullable=false)
+     * @ORM\Column(name="dt_debut", type="date", nullable=false)
      */
-    private $libelledemijournee;
+    private $dtDebut;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dt_fin", type="date", nullable=false)
+     */
+    private $dtFin;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Indisponible", mappedBy="idDemiJournee")
+     * @ORM\ManyToMany(targetEntity="Indisponible", mappedBy="idLongueduree")
      */
     private $idIndisponible;
 
@@ -45,19 +52,31 @@ class DemiJournee
         $this->idIndisponible = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getIddemijournee(): ?int
+    public function getIdlongueduree(): ?int
     {
-        return $this->iddemijournee;
+        return $this->idlongueduree;
     }
 
-    public function getLibelledemijournee(): ?string
+    public function getDtDebut(): ?\DateTimeInterface
     {
-        return $this->libelledemijournee;
+        return $this->dtDebut;
     }
 
-    public function setLibelledemijournee(string $libelledemijournee): self
+    public function setDtDebut(\DateTimeInterface $dtDebut): self
     {
-        $this->libelledemijournee = $libelledemijournee;
+        $this->dtDebut = $dtDebut;
+
+        return $this;
+    }
+
+    public function getDtFin(): ?\DateTimeInterface
+    {
+        return $this->dtFin;
+    }
+
+    public function setDtFin(\DateTimeInterface $dtFin): self
+    {
+        $this->dtFin = $dtFin;
 
         return $this;
     }
@@ -74,7 +93,7 @@ class DemiJournee
     {
         if (!$this->idIndisponible->contains($idIndisponible)) {
             $this->idIndisponible[] = $idIndisponible;
-            $idIndisponible->addIdDemiJournee($this);
+            $idIndisponible->addIdLongueduree($this);
         }
 
         return $this;
@@ -84,7 +103,7 @@ class DemiJournee
     {
         if ($this->idIndisponible->contains($idIndisponible)) {
             $this->idIndisponible->removeElement($idIndisponible);
-            $idIndisponible->removeIdDemiJournee($this);
+            $idIndisponible->removeIdLongueduree($this);
         }
 
         return $this;

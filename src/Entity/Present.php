@@ -7,27 +7,34 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Present
  *
- * @ORM\Table(name="present", indexes={@ORM\Index(name="present_demi_journee_FK", columns={"id_demi_journee"}), @ORM\Index(name="present_periode_formation0_FK", columns={"id_periode_formation"}), @ORM\Index(name="IDX_FDBCAE174E89FE3A", columns={"id_matiere"})})
+ * @ORM\Table(name="present", indexes={@ORM\Index(name="present_demi_journee_FK", columns={"id_demi_journee"}), @ORM\Index(name="present_matiere0_FK", columns={"id_Matiere"}), @ORM\Index(name="IDX_FDBCAE17F1056AF9", columns={"id_Jour"})})
  * @ORM\Entity
  */
 class Present
 {
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="jour", type="date", nullable=false)
-     */
-    private $jour;
-
-    /**
      * @var \DemiJournee
      *
-     * @ORM\ManyToOne(targetEntity="DemiJournee")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="DemiJournee")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_demi_journee", referencedColumnName="idDemiJournee")
      * })
      */
     private $idDemiJournee;
+
+    /**
+     * @var \Jour
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Jour")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_Jour", referencedColumnName="idJour")
+     * })
+     */
+    private $idJour;
 
     /**
      * @var \Matiere
@@ -36,34 +43,10 @@ class Present
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Matiere")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_matiere", referencedColumnName="idMatiere")
+     *   @ORM\JoinColumn(name="id_Matiere", referencedColumnName="idMatiere")
      * })
      */
     private $idMatiere;
-
-    /**
-     * @var \PeriodeFormation
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="PeriodeFormation")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_periode_formation", referencedColumnName="idPeriodeFormation")
-     * })
-     */
-    private $idPeriodeFormation;
-
-    public function getJour(): ?\DateTimeInterface
-    {
-        return $this->jour;
-    }
-
-    public function setJour(\DateTimeInterface $jour): self
-    {
-        $this->jour = $jour;
-
-        return $this;
-    }
 
     public function getIdDemiJournee(): ?DemiJournee
     {
@@ -77,6 +60,18 @@ class Present
         return $this;
     }
 
+    public function getIdJour(): ?Jour
+    {
+        return $this->idJour;
+    }
+
+    public function setIdJour(?Jour $idJour): self
+    {
+        $this->idJour = $idJour;
+
+        return $this;
+    }
+
     public function getIdMatiere(): ?Matiere
     {
         return $this->idMatiere;
@@ -85,18 +80,6 @@ class Present
     public function setIdMatiere(?Matiere $idMatiere): self
     {
         $this->idMatiere = $idMatiere;
-
-        return $this;
-    }
-
-    public function getIdPeriodeFormation(): ?PeriodeFormation
-    {
-        return $this->idPeriodeFormation;
-    }
-
-    public function setIdPeriodeFormation(?PeriodeFormation $idPeriodeFormation): self
-    {
-        $this->idPeriodeFormation = $idPeriodeFormation;
 
         return $this;
     }

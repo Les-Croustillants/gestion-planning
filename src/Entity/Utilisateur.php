@@ -26,37 +26,37 @@ class Utilisateur
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=50, nullable=false)
+     * @ORM\Column(name="nomUtilisateur", type="string", length=50, nullable=false)
      */
-    private $nom;
+    private $nomutilisateur;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="mdp", type="string", length=120, nullable=false)
+     * @ORM\Column(name="mdpUtilisateur", type="string", length=120, nullable=false)
      */
-    private $mdp;
+    private $mdputilisateur;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="mail", type="string", length=80, nullable=false)
+     * @ORM\Column(name="mailUtilisateur", type="string", length=80, nullable=false)
      */
-    private $mail;
+    private $mailutilisateur;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telephone", type="string", length=15, nullable=false)
+     * @ORM\Column(name="telephoneUtilisateur", type="string", length=15, nullable=false)
      */
-    private $telephone;
+    private $telephoneutilisateur;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="heures_attribues", type="integer", nullable=false)
+     * @ORM\Column(name="heures_attribuesUtilisateur", type="integer", nullable=false)
      */
-    private $heuresAttribues;
+    private $heuresAttribuesutilisateur;
 
     /**
      * @var \Role
@@ -73,14 +73,14 @@ class Utilisateur
      *
      * @ORM\ManyToMany(targetEntity="Indisponible", mappedBy="idUtilisateur")
      */
-    private $idIndisponnible;
+    private $idIndisponible;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->idIndisponnible = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idIndisponible = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getIdutilisateur(): ?int
@@ -88,62 +88,62 @@ class Utilisateur
         return $this->idutilisateur;
     }
 
-    public function getNom(): ?string
+    public function getNomutilisateur(): ?string
     {
-        return $this->nom;
+        return $this->nomutilisateur;
     }
 
-    public function setNom(string $nom): self
+    public function setNomutilisateur(string $nomutilisateur): self
     {
-        $this->nom = $nom;
+        $this->nomutilisateur = $nomutilisateur;
 
         return $this;
     }
 
-    public function getMdp(): ?string
+    public function getMdputilisateur(): ?string
     {
-        return $this->mdp;
+        return $this->mdputilisateur;
     }
 
-    public function setMdp(string $mdp): self
+    public function setMdputilisateur(string $mdputilisateur): self
     {
-        $this->mdp = $mdp;
+        $this->mdputilisateur = $mdputilisateur;
 
         return $this;
     }
 
-    public function getMail(): ?string
+    public function getMailutilisateur(): ?string
     {
-        return $this->mail;
+        return $this->mailutilisateur;
     }
 
-    public function setMail(string $mail): self
+    public function setMailutilisateur(string $mailutilisateur): self
     {
-        $this->mail = $mail;
+        $this->mailutilisateur = $mailutilisateur;
 
         return $this;
     }
 
-    public function getTelephone(): ?string
+    public function getTelephoneutilisateur(): ?string
     {
-        return $this->telephone;
+        return $this->telephoneutilisateur;
     }
 
-    public function setTelephone(string $telephone): self
+    public function setTelephoneutilisateur(string $telephoneutilisateur): self
     {
-        $this->telephone = $telephone;
+        $this->telephoneutilisateur = $telephoneutilisateur;
 
         return $this;
     }
 
-    public function getHeuresAttribues(): ?int
+    public function getHeuresAttribuesutilisateur(): ?int
     {
-        return $this->heuresAttribues;
+        return $this->heuresAttribuesutilisateur;
     }
 
-    public function setHeuresAttribues(int $heuresAttribues): self
+    public function setHeuresAttribuesutilisateur(int $heuresAttribuesutilisateur): self
     {
-        $this->heuresAttribues = $heuresAttribues;
+        $this->heuresAttribuesutilisateur = $heuresAttribuesutilisateur;
 
         return $this;
     }
@@ -163,26 +163,26 @@ class Utilisateur
     /**
      * @return Collection|Indisponible[]
      */
-    public function getIdIndisponnible(): Collection
+    public function getIdIndisponible(): Collection
     {
-        return $this->idIndisponnible;
+        return $this->idIndisponible;
     }
 
-    public function addIdIndisponnible(Indisponible $idIndisponnible): self
+    public function addIdIndisponible(Indisponible $idIndisponible): self
     {
-        if (!$this->idIndisponnible->contains($idIndisponnible)) {
-            $this->idIndisponnible[] = $idIndisponnible;
-            $idIndisponnible->addIdUtilisateur($this);
+        if (!$this->idIndisponible->contains($idIndisponible)) {
+            $this->idIndisponible[] = $idIndisponible;
+            $idIndisponible->addIdUtilisateur($this);
         }
 
         return $this;
     }
 
-    public function removeIdIndisponnible(Indisponible $idIndisponnible): self
+    public function removeIdIndisponible(Indisponible $idIndisponible): self
     {
-        if ($this->idIndisponnible->contains($idIndisponnible)) {
-            $this->idIndisponnible->removeElement($idIndisponnible);
-            $idIndisponnible->removeIdUtilisateur($this);
+        if ($this->idIndisponible->contains($idIndisponible)) {
+            $this->idIndisponible->removeElement($idIndisponible);
+            $idIndisponible->removeIdUtilisateur($this);
         }
 
         return $this;

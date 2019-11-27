@@ -7,18 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Proposer
  *
- * @ORM\Table(name="proposer", indexes={@ORM\Index(name="proposer_utilisateur0_FK", columns={"id_utilisateurReceveur"}), @ORM\Index(name="proposer_demi_journee1_FK", columns={"id_demi_journee"}), @ORM\Index(name="IDX_21866C15FDA1FCB7", columns={"id_utilisateurEmmetteur"})})
+ * @ORM\Table(name="proposer", indexes={@ORM\Index(name="proposer_demi_journee1_FK", columns={"id_demi_journee"}), @ORM\Index(name="proposer_utilisateur0_FK", columns={"id_utilisateurReceveur"}), @ORM\Index(name="IDX_21866C15FDA1FCB7", columns={"id_utilisateurEmmetteur"})})
  * @ORM\Entity
  */
 class Proposer
 {
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="date", nullable=false)
-     */
-    private $date;
-
     /**
      * @var \DemiJournee
      *
@@ -54,18 +47,6 @@ class Proposer
      * })
      */
     private $idUtilisateuremmetteur;
-
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
 
     public function getIdDemiJournee(): ?DemiJournee
     {
