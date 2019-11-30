@@ -6,10 +6,7 @@
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
-    <ul>
-    {% for res in result %}
-        <li>{{ res }}</li>
-    {% endfor %}
-    </ul>
+    {{ form(result) }}
+
 </body>
 </html>

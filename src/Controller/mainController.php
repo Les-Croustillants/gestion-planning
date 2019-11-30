@@ -8,10 +8,13 @@ namespace App\Controller;
 use App\Entity\Calendrier;
 use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\DateTime;
+
 
 
 class mainController extends AbstractController
@@ -25,7 +28,7 @@ class mainController extends AbstractController
     }
 
     /**
-     * @Route("/calendrier/annee")
+     * @Route("/calendrier/id")
      */
     public function showCalendAnnee()
     {
@@ -39,10 +42,31 @@ class mainController extends AbstractController
 
         //$calendrier->getSemaines($Date, $Utilisateur);
         $calendrier->setId(10);
-        $result = $calendrier->getIdcalendrier();
-        //print_r($result);
-        print_r($calendrier);
-        return $this->render ('calendrier/calendrier.html.twig', array('result'=> $result));
+        $result[] = $calendrier->getIdcalendrier();
+
+        return $this->render ('calendrier/calendrier.html.twig', [
+            'result'=> $result
+        ]);
+    }
+
+    /**
+     * @Route("/calendrier/annee")
+     */
+    public function choixAnneeCalend()
+    {
+        $calendrier = new Calendrier();
+
+        $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $calendrier);
+
+        $formBuilder
+            ->add('anneeScolaire',DateTimeType::class)
+            ->add('Enregistrer',SubmitType::class);
+
+        $form = $formBuilder->getForm();
+
+
+        return $this->render ('calendrier/calendrierForm.html.twig', array(
+            'result'=> $form->createView()));
     }
 
     /**
