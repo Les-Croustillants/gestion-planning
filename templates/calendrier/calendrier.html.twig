@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+
+{% block body %}
+    <ul>
+    {% for res in result %}
+        <li>{{ res }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

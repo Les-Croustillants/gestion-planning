@@ -63,10 +63,15 @@ class Calendrier
         return $this->anneeScolaire;
     }
 
+    public function setId($id): self
+    {
+        $this->idcalendrier = $id;
+        return $this;
+    }
+
     public function setAnneeScolaire(\DateTimeInterface $anneeScolaire): self
     {
         $this->anneeScolaire = $anneeScolaire;
-
         return $this;
     }
 
