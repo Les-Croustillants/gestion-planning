@@ -139,22 +139,13 @@ class mainController extends AbstractController
             ['test'=> ucwords(str_replace('-', ' ', $semaine))]);
     }
 
-    public function inscription()
+
+    public function deconnexion()
     {
         session_start();
         session_unset();
         session_destroy();
         header('Location: index.php');
-    }
-
-    public function connexion()
-    {
-
-    }
-
-    public function deconnexion()
-    {
-
     }
 
     public function showListeIntervenants()
