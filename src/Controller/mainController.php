@@ -105,7 +105,7 @@ class mainController extends AbstractController
     {
         $inscription = false;
         $submit=isset($_POST['submit']) ? $_POST['submit'] : '';
-        require('templates/connexion.php');
+
         $MailUtilisateur = isset($_POST['MailUtilisateur']) ? $_POST['MailUtilisateur'] : '';
         $MdpUtilisateur = isset($_POST['MdpUtilisateur']) ? hash('gost-crypto', $_POST['MdpUtilisateur']) : '';
         echo $MdpUtilisateur;
@@ -115,7 +115,6 @@ class mainController extends AbstractController
             $utilisateur = new \AtoutProtect\Model\Utilisateur();
 
             $tabUtilisateur = $utilisateur->find($MailUtilisateur)->fetch();
-
 
             if ($tabUtilisateur['MailUtilisateur']== $MailUtilisateur && $tabUtilisateur['MdpUtilisateur']== $MdpUtilisateur)
             {
@@ -128,6 +127,10 @@ class mainController extends AbstractController
                 echo '<script type="text/javascript"> alert("Utilisateur ou mot de passe non reconnu "); </script>';
             }
         }
+
+        return $this->render ('templates/connexion.html.twig', array(
+            'result'=> $form->createView()));
+        //require('templates/connexion.html.twig');
     }
 
     /**
@@ -138,7 +141,6 @@ class mainController extends AbstractController
         return $this->render ('creneau/affiche.html.twig',
             ['test'=> ucwords(str_replace('-', ' ', $semaine))]);
     }
-
 
     public function deconnexion()
     {
