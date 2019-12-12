@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <form method="post">
+
+    <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
+    <label for="inputEmail" class="sr-only">Adresse mail</label>
+    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="exemple@mail.com" required autofocus>
+    <label for="inputPassword" class="sr-only">Mot de passe</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="M0t2p@ss" required>
+
+    <button class="btn btn-lg btn-primary" type="submit" name="submit">
+        Se connecter
+    </button>
+    </form>
+
+{% endblock %}

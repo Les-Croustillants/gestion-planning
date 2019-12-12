@@ -6,6 +6,7 @@ namespace App\Controller;
 
 
 use App\Entity\Calendrier;
+use App\Entity\Utilisateur;
 use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -103,32 +104,48 @@ class mainController extends AbstractController
      */
     public function connexion()
     {
-        $inscription = false;
-        $submit=isset($_POST['submit']) ? $_POST['submit'] : '';
-        require('templates/connexion.php');
-        $MailUtilisateur = isset($_POST['MailUtilisateur']) ? $_POST['MailUtilisateur'] : '';
-        $MdpUtilisateur = isset($_POST['MdpUtilisateur']) ? hash('gost-crypto', $_POST['MdpUtilisateur']) : '';
-        echo $MdpUtilisateur;
+        $MailUtilisateur[0] = isset($_POST['email']) ? $_POST['email'] : '';
+        $MdpUtilisateur[0] = isset($_POST['password']) ? $_POST['password'] : '';
+        $submit=isset($_POST['submit']) ? $_POST['submit'] : null;
 
-        if ($submit)
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $user = new Utilisateur();
+        $user->setNomutilisateur("toto");
+
+        echo $user->getNomutilisateur();
+
+
+        $utilisateur = $em->getRepository("App\Entity\Utilisateur")->findBymailutilisateur("mail@test.fr")->getQuey();
+
+
+        if($utilisateur != null)
         {
-            $utilisateur = new \AtoutProtect\Model\Utilisateur();
 
-            $tabUtilisateur = $utilisateur->find($MailUtilisateur)->fetch();
+            echo $utilisateur->getNomutilisateur();
 
+        }
 
-            if ($tabUtilisateur['MailUtilisateur']== $MailUtilisateur && $tabUtilisateur['MdpUtilisateur']== $MdpUtilisateur)
-            {
-                $_SESSION['MailUtilisateur'] = $MailUtilisateur;
-                $_SESSION['IdUtilisateur'] = $tabUtilisateur['IdUtilisateur'];
-                header('Location: /inscription');
-            }
-            else
-            {
-                echo '<script type="text/javascript"> alert("Utilisateur ou mot de passe non reconnu "); </script>';
-            }
+        if (!$submit) {
+            $form = $this->createFormBuilder()//$defaultData
+            ->add('Mail', \Symfony\Component\Form\Extension\Core\Type\TextType::class)
+                ->add('MotDePasse', \Symfony\Component\Form\Extension\Core\Type\PasswordType::class)
+                ->add('Envoyer', \Symfony\Component\Form\Extension\Core\Type\SubmitType::class)
+                ->getForm();
+            return $this->render('connexion.html.twig', array(
+                    'form' => $form->createView(),
+                )
+            );
+        }else{
+            return $this->render('calendrier/calendrier.html.twig', array(
+                    'result' => $MailUtilisateur,
+                )
+            );
         }
     }
+
+
+//    }
 
     /**
      * @Route("/calendrier/semaine/{idSemaine}")
@@ -139,22 +156,17 @@ class mainController extends AbstractController
             ['test'=> ucwords(str_replace('-', ' ', $semaine))]);
     }
 
-    public function inscription()
-    {
-        session_start();
-        session_unset();
-        session_destroy();
-        header('Location: index.php');
-    }
-
-    public function connexion()
-    {
-
-    }
-
+    /**
+     * @Route("/deconnexion")
+     */
     public function deconnexion()
     {
-
+        if(!$_SESSION){
+            session_start();
+        }
+        session_unset();
+        session_destroy();
+        home();
     }
 
     public function showListeIntervenants()
