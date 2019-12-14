@@ -19,6 +19,11 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
+
+
+use Symfony\Component\Debug\Debug;
+
+
 class AuthUtilisateurAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
@@ -70,7 +75,6 @@ class AuthUtilisateurAuthenticator extends AbstractFormLoginAuthenticator
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
         }
-
         return $user;
     }
 
