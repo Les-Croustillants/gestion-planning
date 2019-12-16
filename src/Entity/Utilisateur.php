@@ -5,14 +5,18 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Utilisateur
  *
+ * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
  * @ORM\Table(name="utilisateur", indexes={@ORM\Index(name="utilisateur_role_FK", columns={"id_role"})})
  * @ORM\Entity
- */
-class Utilisateur
+
+ *///@UniqueEntity(fields={"mailUtilisateur"}, message="There is already an account with this mailUtilisateur")
+class Utilisateur implements UserInterface
 {
     /**
      * @var int
@@ -29,6 +33,13 @@ class Utilisateur
      * @ORM\Column(name="nomUtilisateur", type="string", length=50, nullable=false)
      */
     private $nomutilisateur;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prenomUtilisateur", type="string", length=50, nullable=false)
+     */
+    private $prenomutilisateur;
 
     /**
      * @var string
@@ -100,6 +111,18 @@ class Utilisateur
         return $this;
     }
 
+    public function getPrenomutilisateur(): ?string
+    {
+        return $this->prenomutilisateur;
+    }
+
+    public function setPrenomutilisateur(string $prenomutilisateur): self
+    {
+        $this->prenomutilisateur = $prenomutilisateur;
+
+        return $this;
+    }
+
     public function getMdputilisateur(): ?string
     {
         return $this->mdputilisateur;
@@ -156,7 +179,6 @@ class Utilisateur
     public function setIdRole(?Role $idRole): self
     {
         $this->idRole = $idRole;
-
         return $this;
     }
 
@@ -184,8 +206,55 @@ class Utilisateur
             $this->idIndisponible->removeElement($idIndisponible);
             $idIndisponible->removeIdUtilisateur($this);
         }
-
         return $this;
     }
 
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->mailutilisateur;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string) $this->mdputilisateur;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->mdputilisateur = $password;
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return ROLE_USER;
+    }
 }

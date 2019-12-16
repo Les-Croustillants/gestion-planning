@@ -13,6 +13,20 @@ use Doctrine\ORM\Mapping as ORM;
 class Proposer
 {
     /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="date_cours_emmetteur", type="date", nullable=true, options={"default"="NULL"})
+     */
+    private $dateCoursEmmetteur = 'NULL';
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="date_cours_receveur", type="date", nullable=true, options={"default"="NULL"})
+     */
+    private $dateCoursReceveur = 'NULL';
+
+    /**
      * @var \DemiJournee
      *
      * @ORM\Id
@@ -47,6 +61,30 @@ class Proposer
      * })
      */
     private $idUtilisateuremmetteur;
+
+    public function getDateCoursEmmetteur(): ?\DateTimeInterface
+    {
+        return $this->dateCoursEmmetteur;
+    }
+
+    public function setDateCoursEmmetteur(?\DateTimeInterface $dateCoursEmmetteur): self
+    {
+        $this->dateCoursEmmetteur = $dateCoursEmmetteur;
+
+        return $this;
+    }
+
+    public function getDateCoursReceveur(): ?\DateTimeInterface
+    {
+        return $this->dateCoursReceveur;
+    }
+
+    public function setDateCoursReceveur(?\DateTimeInterface $dateCoursReceveur): self
+    {
+        $this->dateCoursReceveur = $dateCoursReceveur;
+
+        return $this;
+    }
 
     public function getIdDemiJournee(): ?DemiJournee
     {

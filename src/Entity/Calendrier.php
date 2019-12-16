@@ -63,15 +63,10 @@ class Calendrier
         return $this->anneeScolaire;
     }
 
-    public function setId($id): self
-    {
-        $this->idcalendrier = $id;
-        return $this;
-    }
-
     public function setAnneeScolaire(\DateTimeInterface $anneeScolaire): self
     {
         $this->anneeScolaire = $anneeScolaire;
+
         return $this;
     }
 
@@ -101,30 +96,4 @@ class Calendrier
         return $this;
     }
 
-    public function getSemaines($Date, $Utilisateur)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $RAW_QUERY = 'SELECT * 
-	FROM proposer, jours_feries, matieres, periodes_formation, recurrent, periode, present, indisponible, demi_journees
-	WHERE periodes_formation.date_debut = :date
-	AND utilisateur.id = :utilisateur  
-	AND utilisateur.id = matieres.id_utilisateur 
-	AND utilisateur.id = etre.id_utilisateur 		
-	AND etre.id = indisponible.id 						
-	AND indisponible.id = recurrent.id 					
-	AND indisponible.id = periode.id 						
-	AND utilisateur.id = proposer.id_utilisateur	
-	AND proposer.id_demi_journee = demi_journee.id
-	AND demi_journee.id = relier.id_demi_journee
-	AND relier.id = indisponible.id;';
-
-        $statement = $em->getConnection()->prepare($RAW_QUERY);
-        // Set parameters
-        $statement->bindValue('date', $Date);
-        $statement->bindValue('utilisateur', $Utilisateur);
-        $statement->execute();
-
-        $result = $statement->fetchAll();
-    }
 }
