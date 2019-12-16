@@ -32,14 +32,11 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
-            $em = $this->getDoctrine()->getEntityManager();
-            $res = $em->getRepository("App\Entity\Role")->findByLibellerole("Formateur");
-
-            $role = new Role($res[0]);
-
-            print_r($role[0]);
-            $user->setIdRole($role[0]->getIdrole());
+        print_r($user->setMdputilisateur(
+            $passwordEncoder->encodePassword(
+                $user,
+                $form->get('plainPassword')->getData()
+            )));
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

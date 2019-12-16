@@ -178,8 +178,7 @@ class Utilisateur implements UserInterface
 
     public function setIdRole(?Role $idRole): self
     {
-        //$this->idRole = $idRole;
-        $this->idRole = 1;
+        $this->idRole = $idRole;
         return $this;
     }
 
@@ -207,7 +206,6 @@ class Utilisateur implements UserInterface
             $this->idIndisponible->removeElement($idIndisponible);
             $idIndisponible->removeIdUtilisateur($this);
         }
-
         return $this;
     }
 
@@ -257,6 +255,6 @@ class Utilisateur implements UserInterface
      */
     public function getRoles()
     {
-        // TODO: Implement getRoles() method.
+        return ROLE_USER;
     }
 }
