@@ -255,6 +255,7 @@ class Utilisateur implements UserInterface
      */
     public function getRoles()
     {
-        return ROLE_USER;
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
     }
 }
